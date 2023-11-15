@@ -17,8 +17,8 @@ class HyData:
 
     def _read(self, station):
         files = self.files
-        dates = [filename.split(".")[-1] for filename in files]
-        dates = pd.to_datetime(dates, format="%Y%m%d%H")
+        dates = ["".join(filename.split("_")[:2]) for filename in files]
+        dates = pd.to_datetime(dates, format="%Y-%m-%d%H%M")
         lat = pd.DataFrame(columns=dates)
         lon = pd.DataFrame(columns=dates)
         alt = pd.DataFrame(columns=dates)
