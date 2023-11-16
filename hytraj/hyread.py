@@ -23,8 +23,8 @@ class HyData:
         lon = pd.DataFrame(columns=dates)
         alt = pd.DataFrame(columns=dates)
         pre = pd.DataFrame(columns=dates)
-        mixd = pd.DataFrame(columns=dates)
-        gnd = pd.DataFrame(columns=dates)
+        # mixd = pd.DataFrame(columns=dates)
+        # gnd = pd.DataFrame(columns=dates)
         dat = [lat, lon, alt, pre]
         for filename, date in zip(files, dates):
             data = self.read_hysplit_file(filename, station)
@@ -37,7 +37,7 @@ class HyData:
     def read_hysplit_file(self, filename, station, skp=0):
         start_index = self.stations.index(station)
         skip_lines = len(self.stations)
-        columns = ["lat", "lon", "height", "pressure", "mixdepth", "terr_msl"]
+        columns = ["lat", "lon", "height", "pressure"]
         with open(filename, "r") as f:
             data = f.readlines()
         for num, line in enumerate(data):
