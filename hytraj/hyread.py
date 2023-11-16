@@ -30,7 +30,7 @@ class HyData:
             data = self.read_hysplit_file(filename, station)
             for var, col in zip(dat, data.columns):
                 var[date] = data[col]
-        data = xr.Dataset({"lat": lat, "lon": lon, "alt": alt, "pre": pre, "mixd": mixd, "gnd": gnd})
+        data = xr.Dataset({"lat": lat, "lon": lon, "alt": alt, "pre": pre})
         data = data.rename({"dim_0": "step", "dim_1": "time"}).astype("float")
         return data
 
@@ -45,6 +45,6 @@ class HyData:
                 skp = num
                 break
         data = data[skp + 1 :][start_index::skip_lines]
-        data = [line.strip().split()[-4:] for line in data]
+        data = [line.strip().split()[-6:-2] for line in data]
         data = pd.DataFrame(data, columns=columns)
         return data
