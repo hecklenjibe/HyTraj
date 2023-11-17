@@ -45,6 +45,6 @@ class HyData:
                 skp = num
                 break
         data = data[skp + 1 :][start_index::skip_lines]
-        data = [line.strip().split()[-6:-2] for line in data]
+        data = [line.strip().split()[-5:-1] for line in data]
         data = pd.DataFrame(data, columns=columns)
         return data
