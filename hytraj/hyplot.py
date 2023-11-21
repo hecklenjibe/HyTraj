@@ -64,5 +64,6 @@ class ClusterPlot:
         for count, tr in enumerate(lat1.columns):
             lwd = lw*(np.sqrt(kcount[count] / np.sum(kcount)))
             xx, yy = m(lon1[tr].values, lat1[tr].values)
-            m.plot(xx, yy, color=colors[count], lw=lwd)
+            m.plot(xx, yy, color=colors[count], lw=lwd, label = count)
+        plt.legend(bbox_to_anchor=(1.01,1))
         return ax
