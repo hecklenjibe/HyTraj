@@ -73,7 +73,7 @@ class Trajclustering:
         self.traj = data
 
     def fit(self, kmax=50, pyclus=False):
-        n, wce, labels = self.get_kmeans_cluster(kmax, plot=False, pyclus=pyclus)
+        n, wce, labels = self.get_kmeans_cluster(kmax, plot=True, pyclus=pyclus)
         return labels
 
     def _elbow_method(self, kmax=50):
