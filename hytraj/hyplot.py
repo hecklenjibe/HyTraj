@@ -62,9 +62,10 @@ class ClusterPlot:
         lat1, lon1, kcount = self.get_representative_trajectories()
         colors = [cmap(i) for i in np.linspace(0, 1, self.nclus)]
         for count, tr in enumerate(lat1.columns):
-            prop = np.sqrt(kcount[count] / np.sum(kcount))
-            lwd = lw*(prop)
+            prop = kcount[count] / np.sum(kcount)
+            lwd = lw#*(prop)
             xx, yy = m(lon1[tr].values, lat1[tr].values)
             m.plot(xx, yy, color=colors[count], lw=lwd, label = f'{prop*100:.2f}%')
         plt.legend(bbox_to_anchor=(1.01,1))
+        plt.colorbar()
         return ax
