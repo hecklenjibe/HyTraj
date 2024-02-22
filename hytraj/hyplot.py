@@ -4,7 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 from mpl_toolkits.basemap import Basemap, addcyclic, cm
-from matplotlib.colors import Normalize
 
 
 def mean_trajectory(latitudes, longitudes):
@@ -55,12 +54,14 @@ class ClusterPlot:
             self.rep_traj_lat[cluster], self.rep_traj_lon[cluster] = (lats, lons)
         return self.rep_traj_lat, self.rep_traj_lon, kcount
 
-    def plot_representative_trajectories(self, ax=None, cmap=plt.cm.jet, lw=3, s=200):
+    def plot_representative_trajectories(self, ax=None, cmap=plt.cm.viridis, lw=3, s=200):
         m = self.m
         xx, yy = m(self.slon, self.slat)
         m.scatter(xx, yy, color="r", s=s, alpha=0.7)
 
         lat1, lon1, kcount = self.get_representative_trajectories()
+        bounds = np.cumsum(kcount)
+        norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
         colors = [cmap(i) for i in np.linspace(0, 1, np.sum(kcount))]
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
@@ -68,6 +69,5 @@ class ClusterPlot:
             xx, yy = m(lon1[tr].values, lat1[tr].values)
             m.plot(xx, yy, color=colors[kcount[count]], lw=lw, label = f'{prop*100:.2f}%')
         plt.legend(bbox_to_anchor=(1.01,1))
-        plt.colorbar(plt.cm.ScalarMappable(norm=Normalize(0, 100), cmap=cmap),
-             ax=ax, label="% back tarjectories")
+        plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), label="# of back trajectories", position = 'bottom')
         return ax
