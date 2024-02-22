@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import xarray as xr
 from mpl_toolkits.basemap import Basemap, addcyclic, cm
+from matplotlib.colors import Normalize
 
 
 def mean_trajectory(latitudes, longitudes):
@@ -60,12 +61,13 @@ class ClusterPlot:
         m.scatter(xx, yy, color="r", s=s, alpha=0.7)
 
         lat1, lon1, kcount = self.get_representative_trajectories()
-        colors = [cmap(i) for i in np.linspace(0, 1, self.nclus)]
+        colors = [cmap(i) for i in np.linspace(0, 1, np.sum(kcount))]
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
             xx, yy = m(lon1[tr].values, lat1[tr].values)
-            m.plot(xx, yy, color=colors[count], lw=lw, label = f'{prop*100:.2f}%')
+            m.plot(xx, yy, color=colors[kcount[count]], lw=lw, label = f'{prop*100:.2f}%')
         plt.legend(bbox_to_anchor=(1.01,1))
-        plt.colorbar(colors, location = 'bottom')
+        plt.colorbar(plt.cm.ScalarMappable(norm=Normalize(0, 100), cmap=cmap),
+             ax=ax, label="% back tarjectories")
         return ax
