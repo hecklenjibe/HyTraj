@@ -64,7 +64,7 @@ class ClusterPlot:
         bounds = np.cumsum(kcount)
         # bounds = np.insert(bounds, 0, 0)
         # norm = mpl.colors.BoundaryNorm(bounds, ncolors=self.nclus)
-        colors = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+        # colors = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
