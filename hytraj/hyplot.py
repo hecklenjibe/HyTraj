@@ -64,12 +64,12 @@ class ClusterPlot:
         bounds = np.cumsum(kcount)
         # bounds = np.insert(bounds, 0, 0)
         # norm = mpl.colors.BoundaryNorm(bounds, ncolors=self.nclus)
-        # colors = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
+        colors = [cmap(i) for i in np.linspace(0.15,0.85,self.nclus)]
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
             xx, yy = m(lon1[tr].values, lat1[tr].values)
-            m.plot(xx, yy, color=cmap(bounds[count]/np.sum(kcount)), lw=lw, label = f'{prop*100:.2f}%')
-        plt.legend(bbox_to_anchor=(0.01,1.01), ncols = 3)
+            m.plot(xx, yy, color=colors[i], lw=lw, label = f'{prop*100:.2f}%')
+        plt.legend(bbox_to_anchor=(0.9,1.1), ncols = 3)
         # plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), ax=plt.gca(), label="# of back trajectories", location = 'bottom')
         return ax
