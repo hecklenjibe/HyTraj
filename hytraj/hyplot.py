@@ -62,13 +62,14 @@ class ClusterPlot:
 
         lat1, lon1, kcount = self.get_representative_trajectories()
         bounds = np.cumsum(kcount)
+        np.insert(bounds, 0, 0)
         norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
         # colors = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
             xx, yy = m(lon1[tr].values, lat1[tr].values)
-            m.plot(xx, yy, color=cmap(bounds[count]), lw=lw, label = f'{prop*100:.2f}%')
+            m.plot(xx, yy, color=cmap(bounds[count]/np.sum(kcount)), lw=lw, label = f'{prop*100:.2f}%')
         plt.legend(bbox_to_anchor=(1.01,1))
         plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), label="# of back trajectories", location = 'bottom')
         return ax
