@@ -63,7 +63,7 @@ class ClusterPlot:
         lat1, lon1, kcount = self.get_representative_trajectories()
         bounds = np.cumsum(kcount)
         norm = mpl.colors.BoundaryNorm(bounds, cmap.N)
-        colors = [cmap(i) for i in np.linspace(0, 1, np.sum(kcount))]
+        colors = plt.cm.ScalarMappable(norm=norm, cmap=cmap)
         for count, tr in enumerate(lat1.columns):
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
