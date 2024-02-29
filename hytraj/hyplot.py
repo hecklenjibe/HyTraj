@@ -69,7 +69,7 @@ class ClusterPlot:
             prop = kcount[count] / np.sum(kcount)
             lwd = lw #*(prop)
             xx, yy = m(lon1[tr].values, lat1[tr].values)
-            m.plot(xx, yy, color=colors[count], lw=lw, label = f'{kcount[count]} ({prop:.1f}%)')
+            m.plot(xx, yy, color=colors[count], lw=lw, label = f'{kcount[count]} ({100*prop:.1f}%)')
         plt.legend()
         # plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), ax=plt.gca(), label="# of back trajectories", location = 'bottom')
         return ax
