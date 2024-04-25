@@ -58,7 +58,7 @@ class ClusterPlot:
     def plot_representative_trajectories(self, ax=None, cmap=plt.cm.viridis, lw=3, s=200):
         m = self.m
         xx, yy = m(self.slon, self.slat)
-        m.scatter(xx, yy, color="r", s=s, alpha=0.7)
+        m.scatter(xx, yy, color="r", s=s, alpha=0.7, zorder=2.5)
 
         lat1, lon1, kcount = self.get_representative_trajectories()
         bounds = np.cumsum(kcount)
